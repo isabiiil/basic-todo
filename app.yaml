@@ -1,0 +1,6 @@
+# [START app_yaml]
+runtime: nodejs
+beta_settings:
+  cloud_sql_instances: soy-tower-235602:us-central1:fullstack-todo
+# env: flex
+# [END app_yaml]
