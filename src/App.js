@@ -16,14 +16,15 @@ export default class Form extends React.Component {
   };
 
   async getData() {
-    await fetch('/get', {
+    await fetch('https://localhost:8080/get', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        "Accept":"application/json"
       },
     })
       .then(console.log('fetching'))
-      .then(res => res.text())
+      .then(res => res.json())
       .then(data => {
         console.log(data);
         this.setState({

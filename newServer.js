@@ -10,14 +10,24 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+app.enable('trust proxy');
 
-const config = {
-  connectionLimit: 5,
-  connectTimeout: 10000, // 10 seconds
-  acquireTimeout: 10000, // 10 seconds
-  waitForConnections: true, // Default: true
-  queueLimit: 0, // Default: 0
-};
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(cors());
+
+app.use((req, res, next) => {
+  res.set('Content-Type', 'text/html');
+  next();
+});
+
+// const config = {
+//   connectionLimit: 5,
+//   connectTimeout: 10000, // 10 seconds
+//   acquireTimeout: 10000, // 10 seconds
+//   waitForConnections: true, // Default: true
+//   queueLimit: 0, // Default: 0
+// };
 
 
 // const db = mysql.createPool({
@@ -45,9 +55,6 @@ const config = {
 // });
 
 const createTcpPool = async config => {
-  // Extract host and port from socket address
-  const dbSocketAddr = process.env.DB_HOST.split(':');
-
   // Establish a connection to the database
   return mysql.createPool({
     user: "root", // e.g. 'my-db-user'
@@ -117,7 +124,7 @@ app.get('/get', (req, res) => {
       res.send(results);
     },
   );
-  return res;
+  // return res;
 });
 
 app.post('/post', (req, res) => {
